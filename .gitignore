@@ -1,0 +1,12 @@
+.settings
+.idea
+/
+target/
+*.log
+.classpath
+.project
+bin/
+venv
+__pycache__
+db.txt
+db.json
