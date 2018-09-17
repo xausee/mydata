@@ -6,7 +6,7 @@ target/
 .classpath
 .project
 bin/
-venv
+.venv
 __pycache__
 db.txt
 db.json
