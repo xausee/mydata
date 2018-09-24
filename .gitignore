@@ -10,3 +10,4 @@ bin/
 __pycache__
 db.txt
 db.json
+*.pyc

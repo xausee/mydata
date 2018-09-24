@@ -1,36 +1,43 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 import json
+import random
 from flask import Flask, request
 from db import db
+from bson.objectid import ObjectId
 
 app = Flask(__name__)
 
 
-@app.route("/getRandomPoems", methods=['POST'])
+@app.route("/getRandomPoem", methods=['POST'])
 def get_random_poems():
-    poem_col = db.poem.find().limit(5)
-    data = list()
-    for doc in poem_col:
+    count = db.poem.find().count()
+    cursor = db.poem.find().limit(1).skip(random.randint(1, count - 1))
+    data = {}
+    for doc in cursor:
         doc.pop("_id")
-        data.append(doc)
+        data = doc
+        break
+
     return json.dumps(data)
 
 
 @app.route("/getPoem", methods=['POST'])
 def get_poem():
-    id = request.form['id']
-    poem = db.poem.find_one({"id": id})
+    data = json.loads(request.get_data().decode())
+    poem_id = data['id']
+    # poem = db.poem.find_one({"_id": ObjectId(poem_id)})
+    poem = db.poem.find_one({"id": poem_id})
     poem.pop("_id")
     return json.dumps(poem)
 
 
 @app.route("/searchPoem", methods=['POST'])
 def search_poem():
-    data = json.loads(request.get_data().decode())
+    data = json.loads(request.get_data().decode("utf8"))
     key = data['key']
-    qurey = {"$or": [{'author': {'$regex': key}}, {'title': {'$regex': key}}, {'content': {'$regex': key}}]}
-    poem_col = db.poem.find(qurey).limit(5)
+    query = {"$or": [{'author': {'$regex': key}}, {'title': {'$regex': key}}, {'content': {'$regex': key}}]}
+    poem_col = db.poem.find(query).limit(5)
     data = list()
     for doc in poem_col:
         doc.pop("_id")
