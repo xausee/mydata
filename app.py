@@ -4,9 +4,13 @@ import json
 import random
 from flask import Flask, request
 from db import db
-from bson.objectid import ObjectId
 
 app = Flask(__name__)
+
+
+# @app.route("/")
+# def hello():
+#     return "Hello World!"
 
 
 @app.route("/getRandomPoem", methods=['POST'])
@@ -43,3 +47,7 @@ def search_poem():
         doc.pop("_id")
         data.append(doc)
     return json.dumps(data)
+
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=80, debug=False, ssl_context=("cert/full_chain.pem", "cert/private.key"))

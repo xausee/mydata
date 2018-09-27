@@ -10,7 +10,7 @@ eval "$(pyenv init -)"
 pip install virtualenv
 
 echo "-> Creating virtualenv..."
-virtualenv --setuptools --no-site-packages --prompt="(${PWD##*/}) " -p python .venv
+virtualenv --setuptools --no-site-packages --prompt="(${PWD##*/}) " -p python3 .venv
 
 echo "-> Activating virtualenv..."
 source .venv/bin/activate
