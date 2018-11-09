@@ -41,7 +41,7 @@ def search_poem():
     data = json.loads(request.get_data().decode("utf8"))
     key = data['key']
     query = {"$or": [{'author': {'$regex': key}}, {'title': {'$regex': key}}, {'content': {'$regex': key}}]}
-    poem_col = db.poem.find(query).limit(5)
+    poem_col = db.poem.find(query).limit(50)
     data = list()
     for doc in poem_col:
         doc.pop("_id")
