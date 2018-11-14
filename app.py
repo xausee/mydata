@@ -49,5 +49,13 @@ def search_poem():
     return json.dumps(data)
 
 
+@app.route("/getPoets", methods=['POST'])
+def get_poets():
+    data = json.loads(request.get_data().decode())
+    amount = data['amount']
+    poets_list = [poet["name"] for poet in db.poet.aggregate([{"$sample": {"size": amount}}])]
+    return json.dumps(poets_list)
+
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=443, debug=False, ssl_context=("cert/full_chain.pem", "cert/private.key"))
