@@ -11,3 +11,7 @@ __pycache__
 db.txt
 db.json
 *.pyc
+cert/full_chain.pem
+cert/private.key
+uatconfig.json
+prodconfig.json
