@@ -83,7 +83,9 @@ def get_poets():
         poets_list = [
             {
                 "id": poet["id"],
-                "name": poet["name"]
+                "name": poet["name"],
+                "alphabetIndex": poet["alphabetindex"],
+                "genres": poet["genres"],
             } for poet in
             db.poet.find(query).limit(data["amount"])
         ]
@@ -91,7 +93,9 @@ def get_poets():
         poets_list = [
             {
                 "id": poet["id"],
-                "name": poet["name"]
+                "name": poet["name"],
+                "alphabetIndex": poet["alphabetindex"],
+                "genres": poet["genres"],
             } for poet in
             db.poet.find(query)
         ]
