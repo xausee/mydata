@@ -157,5 +157,27 @@ def get_genres():
     return json.dumps(genre_list)
 
 
+@app.route("/getGenreData", methods=['POST'])
+def get_genre_data():
+    data = json.loads(request.get_data().decode("utf8"))
+    genre_id = data['genreId']
+
+    data = dict()
+
+    genre_document = db.genre.find({"id": genre_id}).limit(1)[0]
+
+    poets = list()
+    for doc in db.poet.find({"genres": {"$in": [genre_document["name"]]}}):
+        poets.append({"id": doc["id"], "name": doc["name"]})
+
+    data["id"] = genre_document["id"]
+    data["name"] = genre_document["name"]
+    data["chronology"] = genre_document["chronology"]
+    data["intro"] = genre_document["description"]
+    data["poets"] = poets
+
+    return json.dumps(data)
+
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=443, debug=False, ssl_context=("cert/full_chain.pem", "cert/private.key"))
