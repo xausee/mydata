@@ -117,6 +117,7 @@ def get_poet_data():
         poems.append({"id": doc["id"], "title": doc["title"]})
 
     data["id"] = poet_document["id"]
+    data["name"] = poet_document["name"]
     data["chronology"] = poet_document["chronology"]
     data["genres"] = poet_document["genres"]
     data["intro"] = poet_document["intro"]
