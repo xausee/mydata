@@ -85,6 +85,7 @@ def get_poets():
                 "id": poet["id"],
                 "name": poet["name"],
                 "alphabetIndex": poet["alphabetindex"],
+                "chronology": poet["chronology"],
                 "genres": poet["genres"],
             } for poet in
             db.poet.find(query).limit(data["amount"])
@@ -95,6 +96,7 @@ def get_poets():
                 "id": poet["id"],
                 "name": poet["name"],
                 "alphabetIndex": poet["alphabetindex"],
+                "chronology": poet["chronology"],
                 "genres": poet["genres"],
             } for poet in
             db.poet.find(query)
