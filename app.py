@@ -103,5 +103,27 @@ def get_poets():
     return json.dumps(poets_list)
 
 
+@app.route("/getPoetData", methods=['POST'])
+def get_poet_data():
+    data = json.loads(request.get_data().decode("utf8"))
+    poet_id = data['poetId']
+
+    data = dict()
+
+    poet_document = db.poet.find({"id": poet_id}).limit(1)[0]
+
+    poems = list()
+    for doc in db.poem.find({"authorid": poet_id}):
+        poems.append({"id": doc["id"], "title": doc["title"]})
+
+    data["id"] = poet_document["id"]
+    data["chronology"] = poet_document["chronology"]
+    data["genres"] = poet_document["genres"]
+    data["intro"] = poet_document["intro"]
+    data["poems"] = poems
+
+    return json.dumps(data)
+
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=443, debug=False, ssl_context=("cert/full_chain.pem", "cert/private.key"))
