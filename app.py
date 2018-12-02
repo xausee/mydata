@@ -128,5 +128,34 @@ def get_poet_data():
     return json.dumps(data)
 
 
+@app.route("/getGenres", methods=['POST'])
+def get_genres():
+    data = json.loads(request.get_data().decode())
+
+    query = {}
+
+    if "name" in data:
+        query["name"] = data["name"]
+
+    if "chronology" in data:
+        query["chronology"] = data["chronology"]
+
+    if "alphabetIndex" in data:
+        query["alphabetindex"] = data["alphabetindex"]
+
+    genre_list = [
+        {
+            "id": genre["id"],
+            "name": genre["name"],
+            "alphabetIndex": genre["alphabetindex"],
+            "chronology": genre["chronology"],
+            "description": genre["description"],
+        } for genre in
+        db.genre.find(query)
+    ]
+
+    return json.dumps(genre_list)
+
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=443, debug=False, ssl_context=("cert/full_chain.pem", "cert/private.key"))
