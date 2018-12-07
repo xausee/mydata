@@ -79,28 +79,41 @@ def get_poets():
     #         db.poet.aggregate([{"$sample": {"size": data["amount"]}}])
     #     ]
 
-    if "amount" in data:
-        poets_list = [
-            {
-                "id": poet["id"],
-                "name": poet["name"],
-                "alphabetIndex": poet["alphabetindex"],
-                "chronology": poet["chronology"],
-                "genres": poet["genres"],
-            } for poet in
-            db.poet.find(query).limit(data["amount"])
-        ]
-    else:
-        poets_list = [
-            {
-                "id": poet["id"],
-                "name": poet["name"],
-                "alphabetIndex": poet["alphabetindex"],
-                "chronology": poet["chronology"],
-                "genres": poet["genres"],
-            } for poet in
-            db.poet.find(query)
-        ]
+    # 数量限制
+    # if "amount" in data:
+    #     poets_list = [
+    #         {
+    #             "id": poet["id"],
+    #             "name": poet["name"],
+    #             "alphabetIndex": poet["alphabetindex"],
+    #             "chronology": poet["chronology"],
+    #             "genres": poet["genres"],
+    #         } for poet in
+    #         db.poet.find(query).limit(data["amount"])
+    #     ]
+    # else:
+    #     poets_list = [
+    #         {
+    #             "id": poet["id"],
+    #             "name": poet["name"],
+    #             "alphabetIndex": poet["alphabetindex"],
+    #             "chronology": poet["chronology"],
+    #             "genres": poet["genres"],
+    #         } for poet in
+    #         db.poet.find(query)
+    #     ]
+
+    # 不对数量做限制
+    poets_list = [
+        {
+            "id": poet["id"],
+            "name": poet["name"],
+            "alphabetIndex": poet["alphabetindex"],
+            "chronology": poet["chronology"],
+            "genres": poet["genres"],
+        } for poet in
+        db.poet.find(query)
+    ]
 
     return json.dumps(poets_list)
 
